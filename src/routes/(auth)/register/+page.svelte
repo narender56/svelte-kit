@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Checkbox, Container, Text, Title } from '@svelteuidev/core';
+    import { Button, Checkbox, Container, Anchor, Title } from '@svelteuidev/core';
     import { EnvelopeClosed, EyeNone, LockClosed } from 'radix-icons-svelte';
     import { _ } from 'svelte-i18n';
     import { createForm } from "svelte-forms-lib"
@@ -11,13 +11,19 @@
 
     const { form, errors, handleSubmit } = createForm({
         initialValues: {
+            firstName: '',
+            lastName: '',
             email: '',
             password: '',
+            repeatPassword: '',
             rememberMe: true,
         },
         validationSchema: yup.object().shape({
+            firstName: yup.string().min(3).max(20).required(),
+            lastName: yup.string().min(3).max(20).required(),
             email: yup.string().email().required(),
-            password: yup.string().required()
+            password: yup.string().required(),
+            repeatPassword: yup.string().required().oneOf([yup.ref("password")], $_('PasswordsDoNotMatch')),
         }),
         onSubmit: values => {
             cookies.set('auth', values.email);
@@ -26,8 +32,20 @@
     });
 </script>
 
-<Title order={3} class="mt-6 text-center font-medium text-gray-900">{$_('SignInInfo')}</Title>
+<Title order={3} class="mt-6 text-center font-medium text-gray-900">{$_('CreateYourAccountInfo')}</Title>
 <Container class="mt-8 w-full sm:w-1/2 space-y-2">
+    <Input
+        name="firstName"
+        placeholder={$_('FirstName')}
+        error={$errors.firstName}
+        bind:value={$form.firstName}
+    />
+    <Input
+        name="lastName"
+        placeholder={$_('LastName')}
+        error={$errors.lastName}
+        bind:value={$form.lastName}
+    />
     <Input
         name="email"
         placeholder={$_('Email')}
@@ -42,6 +60,13 @@
         error={$errors.password}
         bind:value={$form.password}
     />
+    <Input
+        name="repeatPassword"
+        placeholder={$_('RepeatPassword')}
+        icon={EyeNone}
+        error={$errors.repeatPassword}
+        bind:value={$form.repeatPassword}
+    />
 </Container>
 <Container class="flex flex-col items-start sm:flex-row sm:justify-between sm:items-center mt-8 w-full sm:w-1/2 space-y-2">
     <Checkbox
@@ -51,7 +76,7 @@
         label={$_('RememberMe')}
         bind:checked={$form.rememberMe}
     />
-    <Text class="font-medium text-emerald-600 hover:text-emerald-500 cursor-pointer" color='red'>{$_('ForgotPassword')}</Text>
+    <Anchor underline={false} href="/login" class="font-medium text-emerald-600 hover:text-emerald-500 cursor-pointer" color='red'>{$_('BackToLogin')}</Anchor>
 </Container>
 <Container class="flex justify-center mt-8">
     <Button
@@ -59,6 +84,6 @@
         on:click={handleSubmit}
     >
         <LockClosed slot="leftIcon" />
-        {$_('SignIn')}
+        {$_('CreateAccount')}
     </Button>
 </Container>

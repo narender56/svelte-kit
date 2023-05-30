@@ -1,9 +1,17 @@
 {
     "AppName": "Praxis",
+    "BackToLogin": "Back to login",
+    "CreateAccount": "Create account",
+    "CreateAPassword": "Create a password",
+    "CreateYourAccountInfo": "Create your account",
     "Email": "Email address",
+    "FirstName": "First name",
     "ForgotPassword": "Forgot your password?",
+    "LastName": "Last name",
     "Password": "Password",
+    "PasswordsDoNotMatch": "Passwords do not match",
     "RememberMe": "Remember me",
+    "RepeatPassword": "Repeat password",
     "SignIn": "Sign in",
     "SignInInfo": "Sign in to your account"
 }

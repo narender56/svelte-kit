@@ -3,7 +3,7 @@
 
     export let name: string;
     export let placeholder: string;
-    export let icon: any;
+    export let icon: any = undefined;
     export let value: any;
     export let error: string = '';
 </script>
@@ -14,5 +14,5 @@
     bind:value={value}
 />
 {#if error} 
-    <Text size="xs" color="red">{error}</Text>
+    <Text class="first-letter:capitalize" size="xs" color="red">{error}</Text>
 {/if}
