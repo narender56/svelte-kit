@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --app-header-height: 4rem;
+  --app-sidebar-width: 14rem;
+
+  @media (max-width: 768px) {
+    --app-sidebar-width: 0 !important;
+  }
+}
