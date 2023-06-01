@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Checkbox, Container, Text, Title } from '@svelteuidev/core';
+    import { Button, CheckboxGroup } from 'stwui';
     import { EnvelopeClosed, EyeNone, LockClosed } from 'radix-icons-svelte';
     import { _ } from 'svelte-i18n';
     import { createForm } from "svelte-forms-lib"
@@ -9,7 +9,9 @@
     import { goto } from '$app/navigation';
     import cookies from '@/services/cookies';
 
-    const { form, errors, handleSubmit } = createForm({
+    let submittingForm = false;
+
+    const { form, errors, handleSubmit, handleChange } = createForm({
         initialValues: {
             email: '',
             password: '',
@@ -20,20 +22,24 @@
             password: yup.string().required()
         }),
         onSubmit: values => {
-            cookies.set('auth', values.email);
-            goto('/');
+            submittingForm = true;
+            setTimeout(() => {
+                cookies.set('auth', values.email);
+                goto('/');
+            }, 1000)
         }
     });
 </script>
 
-<Title order={3} class="mt-6 text-center font-medium text-gray-900">{$_('SignInInfo')}</Title>
-<Container class="mt-8 w-full sm:w-1/2 space-y-2">
+<h3 class="text-center font-medium text-gray-900">{$_('SignInInfo')}</h3>
+<div class="mt-8 w-full sm:w-1/2 space-y-2">
     <Input
         name="email"
         placeholder={$_('Email')}
         icon={EnvelopeClosed}
         error={$errors.email}
         bind:value={$form.email}
+        on:change={(e) => handleChange(e.detail)}
     />
     <Input
         name="password"
@@ -41,24 +47,16 @@
         icon={EyeNone}
         error={$errors.password}
         bind:value={$form.password}
+        on:change={(e) => handleChange(e.detail)}
     />
-</Container>
-<Container class="flex flex-col items-start sm:flex-row sm:justify-between sm:items-center mt-8 w-full sm:w-1/2 space-y-2">
-    <Checkbox
-        color="teal"
-        size='sm'
-        class="text-gray-900"
-        label={$_('RememberMe')}
-        bind:checked={$form.rememberMe}
-    />
-    <Text class="font-medium text-emerald-600 hover:text-emerald-500 cursor-pointer" color='red'>{$_('ForgotPassword')}</Text>
-</Container>
-<Container class="flex justify-center mt-8">
-    <Button
-        class="w-full sm:w-1/2 bg-emerald-600 hover:bg-emerald-700 py-2 px-4 text-sm font-medium text-white"
-        on:click={handleSubmit}
-    >
-        <LockClosed slot="leftIcon" />
-        {$_('SignIn')}
-    </Button>
-</Container>
+</div>
+<div class="flex flex-col items-start sm:flex-row sm:justify-between sm:items-center mt-8 w-full sm:w-1/2 space-y-2">
+    <CheckboxGroup.Checkbox name="RememberMe" value="cb-1" bind:checked={$form.rememberMe}>
+        <CheckboxGroup.Checkbox.Label slot="label">{$_('RememberMe')}</CheckboxGroup.Checkbox.Label>
+    </CheckboxGroup.Checkbox>
+    <Button class="font-medium text-emerald-600 hover:text-emerald-500 cursor-pointer">{$_('ForgotPassword')}</Button>
+</div>
+<Button class="w-full sm:w-1/2 bg-emerald-600 hover:bg-emerald-700 mt-8 py-2 px-4 text-sm font-medium text-white" on:click={handleSubmit} disabled={submittingForm} loading={submittingForm}>
+    <LockClosed />
+    {$_('SignIn')}
+</Button>

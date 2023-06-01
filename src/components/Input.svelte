@@ -1,18 +1,26 @@
 <script lang="ts">
-    import { TextInput, Text } from '@svelteuidev/core';
+    import { createEventDispatcher } from 'svelte';
+    import { Input } from 'stwui';
 
     export let name: string;
     export let placeholder: string;
+    export let label: string = '';
     export let icon: any = undefined;
     export let value: any;
     export let error: string = '';
+   
+   const dispatch = createEventDispatcher();
 </script>
 
-<TextInput
+<Input
+    name={name}
     placeholder={placeholder}
     icon={icon}
+    error={error}
+    on:input={(e) => dispatch('change', e)}
     bind:value={value}
-/>
-{#if error} 
-    <Text class="first-letter:capitalize" size="xs" color="red">{error}</Text>
-{/if}
+>
+    {#if label}
+        <Input.Label slot="label">{label}</Input.Label>
+    {/if}
+</Input>

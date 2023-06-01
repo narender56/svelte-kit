@@ -6,7 +6,6 @@ export let ssr = false;
 export let csr = true;
 
 export async function load(layoutData: LayoutData) {
-    console.log({ layoutData });
     const auth = cookies.get('auth')
 
     if (!auth) {

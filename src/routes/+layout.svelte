@@ -1,5 +1,4 @@
 <script>
-    import { SvelteUIProvider } from '@svelteuidev/core';
     import { isLoading } from 'svelte-i18n'
 
     import '../app.scss';
@@ -9,7 +8,5 @@
 {#if $isLoading}
     Please wait...
 {:else} 
-    <SvelteUIProvider class="h-full w-full">
-        <slot />
-    </SvelteUIProvider>
+    <slot />
 {/if}
