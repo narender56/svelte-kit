@@ -7,6 +7,9 @@ export default {
   theme: {
     extend: {}
   },
+  stwui: {
+		themes: ['light', 'dark']
+	},
   plugins: [
     require('@tailwindcss/forms'),
 		require('stwui/plugin')

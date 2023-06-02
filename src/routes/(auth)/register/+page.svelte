@@ -1,10 +1,8 @@
 <script lang="ts">
     import { Button, CheckboxGroup } from 'stwui';
-    import { EnvelopeClosed, EyeNone } from 'radix-icons-svelte';
     import { _ } from 'svelte-i18n';
     import { createForm } from "svelte-forms-lib"
     import * as yup from 'yup';
-
     import Input from '@/components/Input.svelte';
     import { goto } from '$app/navigation';
     import cookies from '@/services/cookies';
@@ -56,7 +54,6 @@
     <Input
         name="email"
         placeholder={$_('Email')}
-        icon={EnvelopeClosed}
         error={$errors.email}
         bind:value={$form.email}
         on:change={(e) => handleChange(e.detail)}
@@ -64,7 +61,6 @@
     <Input
         name="password"
         placeholder={$_('Password')}
-        icon={EyeNone}
         error={$errors.password}
         bind:value={$form.password}
         on:change={(e) => handleChange(e.detail)}
@@ -72,7 +68,6 @@
     <Input
         name="repeatPassword"
         placeholder={$_('RepeatPassword')}
-        icon={EyeNone}
         error={$errors.repeatPassword}
         bind:value={$form.repeatPassword}
         on:change={(e) => handleChange(e.detail)}

@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Button, CheckboxGroup } from 'stwui';
-    import { EnvelopeClosed, EyeNone, LockClosed } from 'radix-icons-svelte';
     import { _ } from 'svelte-i18n';
     import { createForm } from "svelte-forms-lib"
     import * as yup from 'yup';
@@ -36,7 +35,6 @@
     <Input
         name="email"
         placeholder={$_('Email')}
-        icon={EnvelopeClosed}
         error={$errors.email}
         bind:value={$form.email}
         on:change={(e) => handleChange(e.detail)}
@@ -44,7 +42,6 @@
     <Input
         name="password"
         placeholder={$_('Password')}
-        icon={EyeNone}
         error={$errors.password}
         bind:value={$form.password}
         on:change={(e) => handleChange(e.detail)}
@@ -57,6 +54,5 @@
     <Button class="font-medium text-emerald-600 hover:text-emerald-500 cursor-pointer">{$_('ForgotPassword')}</Button>
 </div>
 <Button class="w-full sm:w-1/2 bg-emerald-600 hover:bg-emerald-700 mt-8 py-2 px-4 text-sm font-medium text-white" on:click={handleSubmit} disabled={submittingForm} loading={submittingForm}>
-    <LockClosed />
     {$_('SignIn')}
 </Button>

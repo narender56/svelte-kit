@@ -3,5 +3,5 @@
 </script>
 
 <Layout.Content class="h-full w-full">
-	<slot><a href="/login">Home</a></slot>
+	<slot>Home</slot>
 </Layout.Content>

@@ -3,7 +3,7 @@
     import AppSidebar from '@/components/Sidebar.svelte';
     import AppHeader from '@/components/Header.svelte';
 
-    const { Content, Header, Footer } = Layout;
+    const { Content, Header } = Layout;
 
     let sideBarCollapsed = false;
 
@@ -14,8 +14,8 @@
 
 <Layout class="h-full">
 	<Content collapsed={sideBarCollapsed}>
-		<Content.Sidebar class="flex items-center justify-center min-h-[328px]">
-			<AppSidebar on:collapse={toggleSidebar}/>
+		<Content.Sidebar class="max-h-full">
+			<AppSidebar expanded={sideBarCollapsed} on:collapseChange={toggleSidebar} />
 		</Content.Sidebar>
 		<Layout class="flex flex-col items-center justify-center min-h-[200px]">
 			<Header class="static z-0">
@@ -27,10 +27,6 @@
                     <slot />
                 </Content.Body>
 			</Content>
-
-			<Footer class="static z-0 max-h-[64px]">
-				Footer
-			</Footer>
 		</Layout>
 	</Content>
 </Layout>
